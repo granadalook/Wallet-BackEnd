@@ -1,9 +1,10 @@
 import { Controller, Get } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 @ApiTags('ACCOUNT')
 @Controller('account')
 export class AccountController {
   @Get()
+  @ApiOperation({ summary: 'ACCOUNT' })
   getHello(): string {
     return 'ACCOUNT CONTROLLER';
   }
