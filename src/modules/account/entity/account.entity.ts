@@ -9,7 +9,6 @@ import {
 export class Account {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
   @Column({ name: 'clientid' })
   clientId: string;
   @Column()
