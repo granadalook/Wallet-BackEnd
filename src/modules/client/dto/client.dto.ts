@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 import {
   IsEmail,
   IsNotEmpty,
@@ -25,3 +25,4 @@ export class CreateClientDto {
   @ApiProperty({ description: 'ESTADO  DEL CLIENTE' })
   readonly state: number;
 }
+export class UpdateClientDto extends PartialType(CreateClientDto) {}
