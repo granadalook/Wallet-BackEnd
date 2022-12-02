@@ -16,4 +16,11 @@ export class ClientService {
     }
     return clients;
   }
+  async getOneClient(id: string) {
+    const client = await this.clientRepo.findOne({ where: { id: id } });
+    if (!client) {
+      throw new NotFoundException(`CLIENTE NO ENCONTRADO`);
+    }
+    return client;
+  }
 }
