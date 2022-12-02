@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseUUIDPipe,
@@ -42,6 +43,18 @@ export class ClientController {
   getOneClient(@Param('id', ParseUUIDPipe) id: string) {
     return this.clientService.getOneById(id);
   }
+  @Get('nombre/:nombre')
+  @ApiOperation({
+    summary: 'TRAE UN CLIENTE POR EL NOMBRE',
+    description: 'Trae  un cliente  por el nombre',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Devuelve un cliente  por el nombre',
+  })
+  getByName(@Param('nombre') nombre: string) {
+    return this.clientService.getByName(nombre);
+  }
   @Post()
   @ApiOperation({
     summary: 'CREA UN NUEVO CLIENTE',
@@ -53,5 +66,10 @@ export class ClientController {
   })
   createClient(@Body() body: CreateClientDto) {
     return this.clientService.create(body);
+  }
+
+  @Delete(':id')
+  delete(@Param('id', ParseUUIDPipe) id: string) {
+    return this.clientService.delete(id);
   }
 }

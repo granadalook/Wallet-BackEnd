@@ -26,9 +26,20 @@ export class ClientService {
     }
     return client;
   }
+  async getByName(name: string) {
+    const client = await this.clientRepo.findOne({ where: { fullName: name } });
+    if (!client) {
+      throw new NotFoundException(`CLIENTE  ${name} NO ENCONTRADO`);
+    }
+    return client;
+  }
 
   async create(body: CreateClientDto) {
     const newClient = await this.clientRepo.create(body);
     return this.clientRepo.save(newClient);
+  }
+  async delete(id: string) {
+    const userDelete = await this.clientRepo.delete(id);
+    return userDelete;
   }
 }
