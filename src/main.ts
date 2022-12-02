@@ -10,6 +10,7 @@ async function bootstrap() {
     .setTitle('WALLET API')
     .setDescription('WALLET VIRTUAL API')
     .setVersion('1.0')
+    .addTag('CLIENT', 'Modulo de clientes')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docWallet', app, document);

@@ -11,12 +11,12 @@ export class CreateClientDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({ description: 'NOMBRE DEL CLIENTE' })
-  readonly name: string;
+  readonly fullName: string;
   @IsEmail()
   @IsNotEmpty()
   @ApiProperty({ description: 'EMAIL DEL CLIENTE' })
   readonly email: string;
-  @IsPhoneNumber()
+  @IsPhoneNumber('CO')
   @IsNotEmpty()
   @ApiProperty({ description: 'TELEFONO DEL CLIENTE' })
   readonly phone: string;
