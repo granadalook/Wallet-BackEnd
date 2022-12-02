@@ -47,6 +47,10 @@ export class ClientController {
     summary: 'CREA UN NUEVO CLIENTE',
     description: 'Crea un nuevo cliente deacuerdo con el dto',
   })
+  @ApiResponse({
+    status: 201,
+    description: 'Crea un nuevo cliente',
+  })
   createClient(@Body() body: CreateClientDto) {
     return this.clientService.create(body);
   }

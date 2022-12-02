@@ -11,10 +11,11 @@ async function bootstrap() {
     .setDescription('WALLET VIRTUAL API')
     .setVersion('1.0')
     .addTag('CLIENT', 'Modulo de clientes')
+    .addTag('ACCOUNT', 'Modulo de cuentas')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docWallet', app, document);
   app.useGlobalPipes(new ValidationPipe()); //Usar clas validator de forma global
-  await app.listen(4000); // Escuchando por el puerto 4000
+  await app.listen(3000); // Escuchando por el puerto 3000
 }
 bootstrap();
