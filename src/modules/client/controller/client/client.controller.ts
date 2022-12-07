@@ -29,7 +29,14 @@ export class ClientController {
   getAllClients() {
     return this.clientService.getAll();
   }
-
+  @Get('sql')
+  @ApiOperation({
+    summary: 'TRAE TODOS LOS CLIENTS POR CONSULTA DIRECTA SQL',
+    description: 'Trae  todos los clientes por cunsulta directa  sin ORM',
+  })
+  getSeletSql() {
+    return this.clientService.selectSql();
+  }
   @Get(':id')
   @ApiOperation({
     summary: 'TRAE UN CLIENTE POR EL ID',
@@ -67,7 +74,6 @@ export class ClientController {
   createClient(@Body() body: CreateClientDto) {
     return this.clientService.create(body);
   }
-
   @Delete(':id')
   delete(@Param('id', ParseUUIDPipe) id: string) {
     return this.clientService.delete(id);

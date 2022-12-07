@@ -1,13 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Client } from '../../entity/client.entity';
 import { CreateClientDto } from '../../dto/client.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Client as ClientePg } from 'pg';
 
 @Injectable()
 export class ClientService {
   constructor(
     @InjectRepository(Client) private clientRepo: Repository<Client>,
+    @Inject('PG') private clientePg: ClientePg,
   ) {}
 
   async getAll() {
@@ -33,7 +35,6 @@ export class ClientService {
     }
     return client;
   }
-
   async create(body: CreateClientDto) {
     const newClient = await this.clientRepo.create(body);
     return this.clientRepo.save(newClient);
@@ -41,5 +42,15 @@ export class ClientService {
   async delete(id: string) {
     const userDelete = await this.clientRepo.delete(id);
     return userDelete;
+  }
+  async selectSql() {
+    return new Promise((resolve, rejects) => {
+      this.clientePg.query('SELECT * FROM client', (err, res) => {
+        if (err) {
+          rejects(err);
+        }
+        resolve(res);
+      });
+    });
   }
 }
