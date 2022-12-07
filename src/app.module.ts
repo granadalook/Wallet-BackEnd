@@ -13,7 +13,7 @@ import { TokenModule } from './modules/token/token.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: 'environments/.env', // desde aca lee las variables de entorno
+      envFilePath: '.env', // desde aca lee las variables de entorno
       isGlobal: true,
       load: [config], // carga el archivo config para lecctura dewvariables
     }),
