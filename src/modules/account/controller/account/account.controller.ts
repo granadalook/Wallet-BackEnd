@@ -39,7 +39,7 @@ export class AccountController {
     return this.accountService.getById(id);
   }
 
-  @Post()
+  /* @Post()
   @ApiOperation({
     summary: 'CREA UNA NUEVA CUENTA ',
     description: 'Crea una cuenta y la registra en la base de datos',
@@ -50,5 +50,5 @@ export class AccountController {
   })
   createClient(@Body() body: CreateAccountDto) {
     return this.accountService.create(body);
-  }
+  } */
 }

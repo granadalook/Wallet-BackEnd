@@ -1,9 +1,10 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { Client } from '../../entity/client.entity';
-import { CreateClientDto } from '../../dto/client.dto';
+
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Client as ClientePg } from 'pg';
+import { Client } from '../../entity/Client';
+import { CreateClientDto } from '../../dto/client.dto';
 
 @Injectable()
 export class ClientService {
@@ -21,7 +22,7 @@ export class ClientService {
   }
   async getOneById(id: string) {
     const client = await this.clientRepo.findOne({
-      where: { id },
+      where: { cliId: id },
     });
     if (!client) {
       throw new NotFoundException(`CLIENTE  ${id} NO ENCONTRADO`);
@@ -29,13 +30,16 @@ export class ClientService {
     return client;
   }
   async getByName(name: string) {
-    const client = await this.clientRepo.findOne({ where: { fullName: name } });
+    const client = await this.clientRepo.findOne({
+      where: { cliFullName: name },
+    });
     if (!client) {
       throw new NotFoundException(`CLIENTE  ${name} NO ENCONTRADO`);
     }
     return client;
   }
   async create(body: CreateClientDto) {
+    console.log('creo service');
     const newClient = await this.clientRepo.create(body);
     return this.clientRepo.save(newClient);
   }
