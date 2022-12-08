@@ -74,6 +74,14 @@ export class ClientController {
   createClient(@Body() body: CreateClientDto) {
     return this.clientService.create(body);
   }
+  @ApiOperation({
+    summary: 'ELIMINA UN CLIENTE',
+    description: 'Elimina un cliente de la base de datos "BORRADO LOGICO"',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Borrar Cliente',
+  })
   @Delete(':id')
   delete(@Param('id', ParseUUIDPipe) id: string) {
     return this.clientService.delete(id);

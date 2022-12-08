@@ -44,8 +44,10 @@ export class ClientService {
     return this.clientRepo.save(newClient);
   }
   async delete(id: string) {
-    const userDelete = await this.clientRepo.delete(id);
-    return userDelete;
+    const deleteClient = await this.getOneById(id);
+    deleteClient.cliState = 0;
+    deleteClient.cliDeletedAt = new Date();
+    return this.clientRepo.save(deleteClient);
   }
   async selectSql() {
     return new Promise((resolve, rejects) => {

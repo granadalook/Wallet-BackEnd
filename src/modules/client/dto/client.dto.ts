@@ -3,6 +3,7 @@ import {
   IsEmail,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsPhoneNumber,
   IsString,
 } from 'class-validator';
@@ -23,7 +24,7 @@ export class CreateClientDto {
   @IsNotEmpty()
   @ApiProperty({ description: 'FOTO DEL CLIENTE' })
   readonly cliPhoto: string;
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   @ApiProperty({ description: 'ESTADO  DEL CLIENTE' })
   readonly cliState: number;
