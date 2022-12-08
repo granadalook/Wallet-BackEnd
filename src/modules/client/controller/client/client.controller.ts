@@ -3,13 +3,16 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   ParseUUIDPipe,
   Post,
+  Put,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ClientService } from '../../services/client/client.service';
-import { CreateClientDto } from '../../dto/client.dto';
+import { CreateClientDto, UpdateClientDto } from '../../dto/client.dto';
 
 @ApiTags('CLIENT')
 @Controller('client')
@@ -85,5 +88,21 @@ export class ClientController {
   @Delete(':id')
   delete(@Param('id', ParseUUIDPipe) id: string) {
     return this.clientService.delete(id);
+  }
+  @Put(':id')
+  @HttpCode(HttpStatus.ACCEPTED)
+  @ApiOperation({
+    summary: 'EDITA UN CLIENTE',
+    description: 'Edita un cliente  bajo   sus propiedades editables',
+  })
+  @ApiResponse({
+    status: 202,
+    description: 'Edita un cliente',
+  })
+  updateUser(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() changes: UpdateClientDto,
+  ) {
+    return this.clientService.update(id, changes);
   }
 }

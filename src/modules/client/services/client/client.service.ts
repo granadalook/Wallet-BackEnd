@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Client as ClientePg } from 'pg';
 import { Client } from '../../entity/Client';
-import { CreateClientDto } from '../../dto/client.dto';
+import { CreateClientDto, UpdateClientDto } from '../../dto/client.dto';
 
 @Injectable()
 export class ClientService {
@@ -58,5 +58,11 @@ export class ClientService {
         resolve(res);
       });
     });
+  }
+  async update(id: string, changes: UpdateClientDto) {
+    const editCliente = await this.getOneById(id);
+    editCliente.cliUpdatedAt = new Date();
+    this.clientRepo.merge(editCliente, changes);
+    return this.clientRepo.save(editCliente);
   }
 }
