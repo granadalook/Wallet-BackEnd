@@ -99,7 +99,7 @@ export class ClientController {
     status: 202,
     description: 'Edita un cliente',
   })
-  updateUser(
+  update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() changes: UpdateClientDto,
   ) {

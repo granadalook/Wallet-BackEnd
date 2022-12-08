@@ -1,21 +1,22 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsUUID } from 'class-validator';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { IsNotEmpty, IsNumber, IsOptional, IsUUID } from 'class-validator';
 
 export class CreateAccountDto {
   @IsNotEmpty()
   @IsUUID()
   @ApiProperty({ description: 'ID DEL CLIENTE' })
-  readonly clientId: string;
-  @IsNotEmpty()
+  readonly cliId: string;
+  @IsOptional()
   @IsNumber()
   @ApiProperty({ description: 'BALANCE DE LA CUENTA' })
-  readonly balance: number;
-  @IsNotEmpty()
+  readonly accBalance: string;
+  @IsOptional()
   @IsNumber()
   @ApiProperty({ description: 'CREDITO DE LA CUENTA' })
-  readonly credit: number;
-  @IsNotEmpty()
+  readonly accCredit: string;
+  @IsOptional()
   @IsNumber()
   @ApiProperty({ description: 'ESTADO  DE LA CUENTA' })
-  readonly state: number;
+  readonly accState: number;
 }
+export class UpdateAccountDto extends PartialType(CreateAccountDto) {}

@@ -7,13 +7,14 @@ import {
   JoinColumn,
   OneToMany,
   OneToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @Index('pkaccount', ['accId'], { unique: true })
 @Index('account_cli_id_Idx', ['cliId'], { unique: true })
 @Entity('account', { schema: 'public' })
 export class Account {
-  @Column('uuid', { primary: true, name: 'acc_id' })
+  @PrimaryGeneratedColumn('uuid', { name: 'acc_id' })
   accId: string;
 
   @Column('uuid', { name: 'cli_id' })
@@ -47,8 +48,8 @@ export class Account {
   accDeletedAt: Date | null;
 
   @OneToOne(() => Client, (client) => client.account, {
-    onDelete: 'RESTRICT',
-    onUpdate: 'RESTRICT',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   @JoinColumn([{ name: 'cli_id', referencedColumnName: 'cliId' }])
   cli: Client;

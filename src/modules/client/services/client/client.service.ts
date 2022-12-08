@@ -23,6 +23,7 @@ export class ClientService {
   async getOneById(id: string) {
     const client = await this.clientRepo.findOne({
       where: { cliId: id },
+      relations: ['account'],
     });
     if (!client) {
       throw new NotFoundException(`CLIENTE  ${id} NO ENCONTRADO`);
