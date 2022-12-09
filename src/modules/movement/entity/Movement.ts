@@ -1,5 +1,12 @@
 import { Account } from 'src/modules/account/entity/Account';
-import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Index(
   'movement_acc_id_income_acc_id_outcome_Idx',
@@ -9,7 +16,7 @@ import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
 @Index('pkmovement', ['movId'], { unique: true })
 @Entity('movement', { schema: 'public' })
 export class Movement {
-  @Column('uuid', { primary: true, name: 'mov_id' })
+  @PrimaryGeneratedColumn('uuid', { name: 'mov_id' })
   movId: string;
 
   @Column('uuid', { name: 'acc_id_income' })

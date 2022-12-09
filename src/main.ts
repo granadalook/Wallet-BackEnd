@@ -12,10 +12,11 @@ async function bootstrap() {
     .setVersion('1.0')
     .addTag('CLIENT', 'Modulo de clientes')
     .addTag('ACCOUNT', 'Modulo de cuentas')
+    .addTag('MOVEMENT', 'Modulo de movimientos')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docWallet', app, document);
-  app.useGlobalPipes(new ValidationPipe()); //Usar clas validator de forma global
-  await app.listen(3000); // Escuchando por el puerto 3000
+  app.useGlobalPipes(new ValidationPipe());
+  await app.listen(3000);
 }
 bootstrap();
