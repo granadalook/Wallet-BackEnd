@@ -40,7 +40,6 @@ export class ClientService {
     return client;
   }
   async create(body: CreateClientDto) {
-    console.log('creo service');
     const newClient = await this.clientRepo.create(body);
     return this.clientRepo.save(newClient);
   }

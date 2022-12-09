@@ -1,6 +1,14 @@
-import { Controller, Get, Param, ParseUUIDPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Post,
+} from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { MovementService } from '../../services/movement/movement.service';
+import { CreateMovementDto } from '../../dto/movemet.dto';
 @ApiTags('MOVEMENT')
 @Controller('movement')
 export class MovementController {
@@ -29,5 +37,17 @@ export class MovementController {
   })
   getById(@Param('id', ParseUUIDPipe) id: string) {
     return this.movimientoService.getById(id);
+  }
+  @Post()
+  @ApiOperation({
+    summary: 'CREA UN NUEVO MOVIMIENTO',
+    description: 'Crea un nuevo movimiento deacuerdo con el dto',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Crea un nuevo movimiento',
+  })
+  createClient(@Body() body: CreateMovementDto) {
+    return this.movimientoService.create(body);
   }
 }

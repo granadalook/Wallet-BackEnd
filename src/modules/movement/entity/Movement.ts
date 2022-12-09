@@ -41,15 +41,15 @@ export class Movement {
   movDatetime: Date;
 
   @ManyToOne(() => Account, (account) => account.movements, {
-    onDelete: 'RESTRICT',
-    onUpdate: 'RESTRICT',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   @JoinColumn([{ name: 'acc_id_income', referencedColumnName: 'accId' }])
   accIdIncome2: Account;
 
   @ManyToOne(() => Account, (account) => account.movements2, {
-    onDelete: 'RESTRICT',
-    onUpdate: 'RESTRICT',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   @JoinColumn([{ name: 'acc_id_outcome', referencedColumnName: 'accId' }])
   accIdOutcome2: Account;
