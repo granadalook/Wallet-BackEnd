@@ -5,12 +5,14 @@ import { Repository } from 'typeorm';
 import { Client as ClientePg } from 'pg';
 import { Client } from '../../entity/Client';
 import { CreateClientDto, UpdateClientDto } from '../../dto/client.dto';
+import { AplicationService } from '../../../aplication/services/aplication/aplication.service';
 
 @Injectable()
 export class ClientService {
   constructor(
     @InjectRepository(Client) private clientRepo: Repository<Client>,
     @Inject('PG') private clientePg: ClientePg,
+    private aplicationService: AplicationService,
   ) {}
 
   async getAll() {
@@ -23,7 +25,7 @@ export class ClientService {
   async getOneById(id: string) {
     const client = await this.clientRepo.findOne({
       where: { cliId: id },
-      relations: ['account'],
+      relations: ['account', 'app'],
     });
     if (!client) {
       throw new NotFoundException(`CLIENTE  ${id} NO ENCONTRADO`);
@@ -41,7 +43,9 @@ export class ClientService {
   }
   async create(body: CreateClientDto) {
     const newClient = await this.clientRepo.create(body);
-    return this.clientRepo.save(newClient);
+    const client = await this.clientRepo.save(newClient);
+    this.aplicationService.create({ cliId: client.cliId, appColor: 'blue' });
+    return client;
   }
   async delete(id: string) {
     const deleteClient = await this.getOneById(id);

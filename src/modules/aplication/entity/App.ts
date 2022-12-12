@@ -1,11 +1,18 @@
 import { Client } from 'src/modules/client/entity/Client';
-import { Column, Entity, Index, JoinColumn, OneToOne } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Index('pkapp', ['appId'], { unique: true })
 @Index('app_cli_id_Idx', ['cliId'], { unique: true })
 @Entity('app', { schema: 'public' })
 export class App {
-  @Column('uuid', { primary: true, name: 'app_id' })
+  @PrimaryGeneratedColumn('uuid', { name: 'app_id' })
   appId: string;
 
   @Column('uuid', { name: 'cli_id' })
@@ -14,7 +21,6 @@ export class App {
   @Column('character varying', {
     name: 'app_color',
     length: 30,
-    default: () => "'default'",
   })
   appColor: string;
 

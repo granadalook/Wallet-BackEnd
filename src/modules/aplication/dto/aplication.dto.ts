@@ -1,13 +1,14 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { IsNotEmpty, IsOptional, IsUUID, IsString } from 'class-validator';
 
-export class createAplicationDto {
+export class CreateAppDto {
   @IsNotEmpty()
   @IsUUID()
   @ApiProperty({ description: 'ID DEL CLIENTE' })
-  readonly clientId: string;
-  @IsNotEmpty()
+  readonly cliId: string;
+  @IsOptional()
   @IsString()
   @ApiProperty({ description: 'COLOR DE LA APLICACION' })
-  readonly color: string;
+  readonly appColor: string;
 }
+export class UpdateAppDto extends PartialType(CreateAppDto) {}
