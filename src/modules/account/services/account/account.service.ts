@@ -11,6 +11,7 @@ export class AccountService {
   ) {}
 
   async getAll(): Promise<Array<Account>> {
+    console.log('weppa');
     const account = await this.accountRepo.find();
     if (account.length === 0) {
       throw new NotFoundException(`NO EXISTEN CUENTAS`);

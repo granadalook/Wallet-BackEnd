@@ -5,12 +5,14 @@ import { Repository } from 'typeorm';
 import { CreateMovementDto } from '../../dto/movemet.dto';
 import { Movement } from '../../entity/Movement';
 import { AccountService } from '../../../account/services/account/account.service';
+import { ClientService } from 'src/modules/client/services/client/client.service';
 
 @Injectable()
 export class MovementService {
   constructor(
     @InjectRepository(Movement) private movementRepo: Repository<Movement>,
     private accountService: AccountService,
+    private clientService: ClientService,
   ) {}
   async getAll() {
     const movimientos = await this.movementRepo.find();
@@ -28,6 +30,15 @@ export class MovementService {
     }
     return movimiento;
   }
+  async getByIdIn(id: string) {
+    const movimientos = await this.movementRepo.findOne({
+      where: { accIdIncome: id },
+    });
+    if (!movimientos) {
+      throw new NotFoundException(`NO HAY MOVIMIENTOS DE ESTE CLIENTE`);
+    }
+    return movimientos;
+  }
   async create(body: CreateMovementDto) {
     const In = await this.accountService.getById(body.accIdIncome);
     const Out = await this.accountService.getById(body.accIdOutcome);
@@ -43,6 +54,9 @@ export class MovementService {
     await this.accountService.update(body.accIdIncome, In);
     await this.accountService.update(body.accIdOutcome, Out);
     const newMovement = await this.movementRepo.create(body);
-    return this.movementRepo.save(newMovement);
+    this.movementRepo.save(newMovement);
+    const imageOut = await this.clientService.getImageClient(Out.cliId);
+    const imageIn = await this.clientService.getImageClient(In.cliId);
+    return { ...newMovement, imageOut, imageIn };
   }
 }

@@ -32,6 +32,13 @@ export class ClientService {
     }
     return client;
   }
+  async getImageClient(id: string) {
+    const client = await this.clientRepo.findOne({ where: { cliId: id } });
+    if (!client) {
+      throw new NotFoundException(`CLIENTE  ${id} NO ENCONTRADO`);
+    }
+    return client.cliPhoto;
+  }
   async getByName(name: string) {
     const client = await this.clientRepo.findOne({
       where: { cliFullName: name },
